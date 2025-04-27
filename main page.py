@@ -143,17 +143,17 @@ def main():
        if st.session_state.choice_made:
             if st.session_state.goal == "gain":
              with col1:
-               st.image(r"/Users/vihaansfolder/Downloads/Screenshot 2025-04-27 at 2.33.06 PM.png", width=230)
+               st.image(r"./avacado.png", width=230)
                st.markdown("### Avocados can be beneficial for weight gain due to their high calorie and healthy fat content ###")
              with col1:
-                  st.image(r"/Users/vihaansfolder/Downloads/Screenshot 2025-04-27 at 8.36.52 PM.png",width=230)
+                  st.image(r"./eggs.png",width=230)
                   st.markdown("### Eggs can be a beneficial part of a diet for gaining weight due to their high protein content, healthy fats, and calorie density ###")
             if st.session_state.goal == "lose":
              with col1:
-                st.image("/Users/vihaansfolder/Downloads/Screenshot 2025-04-27 at 9.11.13 PM.png",width=230)
+                st.image("./paneer.png",width=230)
                 st.markdown("### It provides good fats, is high in protein, low in carbohydrates, and prevents our systems from storing as much fat since it contains short-chain fatty acids ###")
-            with col1:   
-                st.image("/Users/vihaansfolder/Downloads/Screenshot 2025-04-27 at 9.13.39 PM.png")
+             with col1:   
+                st.image("./salad.png")
                 st.markdown("### Salads are beneficial for weight loss primarily because they are low in calories and high in fiber ###")
 
         
