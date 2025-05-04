@@ -1,14 +1,16 @@
 import streamlit as st
 import sqlite3
 import time
+import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
 
 
 
 
-
-cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
+if not firebase_admin._apps:
+   cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
+   firebase_admin.initialize_app(cred)
 
 
 
