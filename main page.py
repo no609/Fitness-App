@@ -13,21 +13,7 @@ if not firebase_admin._apps:
 
 
 
- cred_path = 'fitness-app-4a1fe-35482cf1a7f9.json'  # Adjust as necessary
-   # Initialize Firebase Admin SDK
-   cred = credentials.Certificate(cred_path)
-   firebase_admin.initialize_app(cred)
-   # Attempt to create a user
-   try:
-       user = auth.create_user(
-           email='test@example.com',
-           password='password123',
-           uid='testuser'
-       )
-       print(f'Successfully created user: {user.uid}')
-   except Exception as e:
-       print(f'Error creating user: {e}')
-
+ 
 
 
 
