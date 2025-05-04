@@ -26,6 +26,13 @@ try:
         print("Firebase Admin SDK initialized successfully.")
     else:
         print("Firebase Admin SDK was already initialized.")
+    except ValueError as ve:
+    # Handles errors like duplicate initialization or config issues
+         print(f"Firebase initialization error: {ve}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected error during Firebase initialization: {e}")
+        sys.exit(1)
 
 
 
