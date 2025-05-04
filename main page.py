@@ -30,7 +30,6 @@ if not firebase_admin._apps:
 
 
 
-
 conn = sqlite3.connect('fitness_app.db')
 c = conn.cursor()
 
