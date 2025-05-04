@@ -5,24 +5,28 @@ import time
 import os
 from firebase_admin import credentials
 from firebase_admin import auth
+import sys
 
 
 
 
-cred_path = 'fitness-app-4a1fe-35482cf1a7f9.json'  # Adjust this path as necessary
-# Print the current working directory for debugging
+cred_path = os.getenv('FIREBASE_CREDENTIALS_PATH', 'fitness-app-4a1fe-35482cf1a7f9.json')
+# Print current working directory to help debug path issues
 print("Current working directory:", os.getcwd())
-# Check if the credentials file exists
+print("Looking for Firebase credentials file at:", cred_path)
+# Check if credentials file exists, else raise error
 if not os.path.exists(cred_path):
-    raise FileNotFoundError(f"Firebase credentials file not found: {cred_path}")
-# Initialize Firebase Admin SDK
+    print(f"Error: Firebase credentials file not found at {cred_path}")
+    sys.exit(1)
 try:
     cred = credentials.Certificate(cred_path)
-    firebase_admin.initialize_app(cred)
-    print("Firebase Admin SDK initialized successfully.")
-except Exception as e:
-    print(f"Failed to initialize Firebase Admin SDK: {e}")
-    raise  # Re-raise the exception after logging
+    # Avoid re-initializing Firebase app if already initialized
+    if not firebase_admin._apps:
+        firebase_admin.initialize_app(cred)
+        print("Firebase Admin SDK initialized successfully.")
+    else:
+        print("Firebase Admin SDK was already initialized.")
+
 
 
 
