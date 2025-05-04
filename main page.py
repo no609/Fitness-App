@@ -1,6 +1,16 @@
 import streamlit as st
 import sqlite3
 import time
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import auth
+
+
+
+
+
+cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
+
 
 
 
@@ -20,6 +30,7 @@ c.execute('''
     )
 ''')
 conn.commit()
+
 
 
 
@@ -45,9 +56,65 @@ def count_down(seconds, calories_to_add):
     st.session_state.calories_burned += calories_to_add
 
     
+def login():
+    st.title("🏋️‍♂️ Home Page")
+    st.write("Welcome to the Fitness App! Let's get fit together!")
 
-   
+    if "Username" not in st.session_state:
+        st.session_state.Username = ""
+    if "Useremail" not in st.session_state:
+        st.session_state.Useremail = ""
+
+    if "signedout" not in st.session_state:
+        st.session_state.signedout = False
+    if "signout" not in st.session_state:
+        st.session_state.signout = False
+
+    def f():
+        try:
+            user = auth.get_user_by_email(Email)
+            st.success("Login Successful")
+            st.session_state.Username = user.uid
+            st.session_state.Useremail = user.email
+            st.session_state.signedout = True
+            st.session_state.signout = True
+        except:
+            st.warning("Login Failed")
+
+    def t():
+        st.session_state.signedout = False
+        st.session_state.signout = False
+        st.session_state.Username = ""
+
+    choice = st.selectbox('Login/Signup', ['Login', 'Sign Up'])
+
+    if not st.session_state.signedout:
+        if choice == 'Login':
+            Email = st.text_input("Email")
+            Password = st.text_input("Password")
+            Username = st.text_input("Enter Username")
+            st.button("Login", on_click=f)
+        else:
+            Email = st.text_input("Email")
+            Password = st.text_input("Password")
+            Username = st.text_input("Make A Unique Username")
+
+            if st.button("Create Account"):
+                user = auth.create_user(email=Email, password=Password, uid=Username)
+                st.success("Account Created Successfully!")
+                st.write("Login Using Email And Password")
+
+    if st.session_state.signout:
+        st.text("Name: " + st.session_state.Username)
+        st.button("Sign Out", on_click=t)
+
+            
+           
+        
+    
+    
 def main():
+    
     
 
     
@@ -61,31 +128,25 @@ def main():
     # Initialize session state for choice
     if 'choice_made' not in st.session_state:
         st.session_state.choice_made = False
-        choice = ""
+        
 
     if page == "Home":
-        st.title("🏋️‍♂️ Home Page")
-        st.write("Welcome to the Fitness App! Let's get fit together!")
+        login()
+
+
 
         
 
     elif page == "Goal":
         st.title("🎯 Choose Your Goal")
 
-        if not st.session_state.choice_made:
-            if st.button("Gain Weight"):
-                st.session_state.choice_made = True
-                st.session_state.goal = "gain"
-                st.success("You have chosen to gain weight!")
-                
-            elif st.button("Lose Weight"):
-                st.session_state.choice_made = True
-                st.session_state.goal = "lose"
-                
-                st.success("You have chosen to lose weight!")
-        else:
-            st.write("Thank you for making your choice!")
-            st.write("Ps: If you want to choose again: refresh.")
+        if 'goal' not in st.session_state:
+         st.session_state.goal = "lose"  # default choice
+
+        goal = st.selectbox("Select your fitness goal:", ["gain", "lose"], index=["gain", "lose"].index(st.session_state.goal))
+        st.session_state.goal = goal
+        st.success(f"You have chosen to {goal} weight!")
+        st.session_state.choice_made = True
 
     elif page == "Workout":
         if st.session_state.choice_made:
@@ -122,11 +183,13 @@ def main():
             st.warning("Please make a choice on the 'Choice' page first.")
     elif page == "Calories":
         st.title("🔥 Calories Burned")
-        st.write(f"Total Calories Burned Are {st.session_state.calories_burned}")
+        st.write("###### (To Burn Calories Do The Workouts Till The End Of Timer) ######")
+        st.markdown(f"## Total Calories Burned Are {st.session_state.calories_burned} ##")
         if st.session_state.calories_burned >= 600:
             st.write("The Daily Goal Has Been Done")
     elif page == "BMI":
         st.title("📏 BMI Calculator")
+        st.markdown("#### BMI, or Body Mass Index, is a number calculated from a person's height and weight, used to estimate body fat #####")
         weight = st.slider("What Is Your Weight(kg): ",10,200)
         height = st.slider("What Is Your Height(cm): ",90,200)
         BMI = (weight)/((height/100)**2)
@@ -148,20 +211,24 @@ def main():
              with col1:
                   st.image(r"./eggs.png",width=230)
                   st.markdown("### Eggs can be a beneficial part of a diet for gaining weight due to their high protein content, healthy fats, and calorie density ###")
-            if st.session_state.goal == "lose":
+            elif st.session_state.goal == "lose":
              with col1:
-                st.image("./paneer.png",width=230)
-                st.markdown("### It provides good fats, is high in protein, low in carbohydrates, and prevents our systems from storing as much fat since it contains short-chain fatty acids ###")
+                 st.image(r"./paneer.png", width=400)
+                 st.markdown("### Paneer provides good fats, is high in protein, low in carbohydrates, and prevents our systems from storing as much fat since it contains short-chain fatty acids ###")
              with col1:   
                 st.image("./salad.png")
                 st.markdown("### Salads are beneficial for weight loss primarily because they are low in calories and high in fiber ###")
+       else:
+        st.warning("Please make a choice on the 'Choice' page first.")
+
+        
+            
+
+        
 
         
         
         
-
-# Set a fixed number
-
 
 if __name__ == "__main__":
      main()
