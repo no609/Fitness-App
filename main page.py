@@ -11,10 +11,8 @@ import sys
 
 
 cred_path = os.getenv('FIREBASE_CREDENTIALS_PATH', 'fitness-app-4a1fe-35482cf1a7f9.json')
-# Print current working directory to help debug path issues
 print("Current working directory:", os.getcwd())
 print("Looking for Firebase credentials file at:", cred_path)
-# Check if credentials file exists, else raise error
 if not os.path.exists(cred_path):
     print(f"Error: Firebase credentials file not found at {cred_path}")
     sys.exit(1)
@@ -26,13 +24,12 @@ try:
         print("Firebase Admin SDK initialized successfully.")
     else:
         print("Firebase Admin SDK was already initialized.")
-    except ValueError as ve:
-    # Handles errors like duplicate initialization or config issues
-         print(f"Firebase initialization error: {ve}")
-        sys.exit(1)
-    except Exception as e:
-        print(f"Unexpected error during Firebase initialization: {e}")
-        sys.exit(1)
+except ValueError as ve:
+    print(f"Firebase initialization error: {ve}")
+    sys.exit(1)
+except Exception as e:
+    print(f"Unexpected error during Firebase initialization: {e}")
+    sys.exit(1)
 
 
 
