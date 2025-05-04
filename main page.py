@@ -7,6 +7,9 @@ from firebase_admin import credentials
 from firebase_admin import auth
 import sys
 
+if not firebase_admin._apps:
+   cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
+   firebase_admin.initialize_app(cred)
 
 
 
