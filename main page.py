@@ -9,7 +9,9 @@ from firebase_admin import auth
 
 
 
-cred_path = 'fitness-app-4a1fe-35482cf1a7f9.json'  # Relative path
+cred_path = 'fitness-app-4a1fe-35482cf1a7f9.json'  # Adjust this path as necessary
+# Print the current working directory for debugging
+print("Current working directory:", os.getcwd())
 # Check if the credentials file exists
 if not os.path.exists(cred_path):
     raise FileNotFoundError(f"Firebase credentials file not found: {cred_path}")
