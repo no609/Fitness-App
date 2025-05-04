@@ -1,7 +1,7 @@
 import streamlit as st
+import firebase_admin
 import sqlite3
 import time
-import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
 
