@@ -2,6 +2,7 @@ import streamlit as st
 import firebase_admin
 import sqlite3
 import time
+import os
 from firebase_admin import credentials
 from firebase_admin import auth
 
@@ -11,6 +12,19 @@ from firebase_admin import auth
 if not firebase_admin._apps:
    cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
    firebase_admin.initialize_app(cred)
+cred_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+if cred_path and os.path.exists(cred_path):
+    cred = credentials.Certificate(cred_path)
+    initialize_app(cred)
+else:
+    print("Firebase credentials not found.")
+
+cred_dict = st.secrets["firebase_credentials"]
+
+# Initialize the Firebase Admin SDK
+cred = credentials.Certificate(cred_dict)
+firebase_admin.initialize_app(cred)
+
 
 
 
