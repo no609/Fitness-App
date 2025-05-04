@@ -13,27 +13,20 @@ if not firebase_admin._apps:
 
 
 
-cred_path = os.getenv('FIREBASE_CREDENTIALS_PATH', 'fitness-app-4a1fe-35482cf1a7f9.json')
-print("Current working directory:", os.getcwd())
-print("Looking for Firebase credentials file at:", cred_path)
-if not os.path.exists(cred_path):
-    print(f"Error: Firebase credentials file not found at {cred_path}")
-    sys.exit(1)
-try:
-    cred = credentials.Certificate(cred_path)
-    # Avoid re-initializing Firebase app if already initialized
-    if not firebase_admin._apps:
-        firebase_admin.initialize_app(cred)
-        print("Firebase Admin SDK initialized successfully.")
-    else:
-        print("Firebase Admin SDK was already initialized.")
-except ValueError as ve:
-    print(f"Firebase initialization error: {ve}")
-    sys.exit(1)
-except Exception as e:
-    print(f"Unexpected error during Firebase initialization: {e}")
-    sys.exit(1)
-
+ cred_path = 'fitness-app-4a1fe-35482cf1a7f9.json'  # Adjust as necessary
+   # Initialize Firebase Admin SDK
+   cred = credentials.Certificate(cred_path)
+   firebase_admin.initialize_app(cred)
+   # Attempt to create a user
+   try:
+       user = auth.create_user(
+           email='test@example.com',
+           password='password123',
+           uid='testuser'
+       )
+       print(f'Successfully created user: {user.uid}')
+   except Exception as e:
+       print(f'Error creating user: {e}')
 
 
 
