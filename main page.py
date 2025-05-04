@@ -9,9 +9,18 @@ from firebase_admin import auth
 
 
 
-if not firebase_admin._apps:
-   cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
-   firebase_admin.initialize_app(cred)
+cred_path = 'fitness-app-4a1fe-35482cf1a7f9.json'  # Relative path
+# Check if the credentials file exists
+if not os.path.exists(cred_path):
+    raise FileNotFoundError(f"Firebase credentials file not found: {cred_path}")
+# Initialize Firebase Admin SDK
+try:
+    cred = credentials.Certificate(cred_path)
+    firebase_admin.initialize_app(cred)
+    print("Firebase Admin SDK initialized successfully.")
+except Exception as e:
+    print(f"Failed to initialize Firebase Admin SDK: {e}")
+    raise  # Re-raise the exception after logging
 
 
 
