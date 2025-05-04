@@ -11,7 +11,7 @@ if not firebase_admin._apps:
    cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
    firebase_admin.initialize_app(cred)
 
-red_path = os.getenv('FIREBASE_CREDENTIALS_PATH', 'fitness-app-4a1fe-35482cf1a7f9.json')
+cred_path = os.getenv('FIREBASE_CREDENTIALS_PATH', 'fitness-app-4a1fe-35482cf1a7f9.json')
 print("Current working directory:", os.getcwd())
 print("Looking for Firebase credentials file at:", cred_path)
 if not os.path.exists(cred_path):
