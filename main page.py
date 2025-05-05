@@ -1,37 +1,9 @@
 import streamlit as st
-import firebase_admin
+
 import sqlite3
 import time
-import os
-from firebase_admin import credentials
-from firebase_admin import auth
-import sys
 
-if not firebase_admin._apps:
-   cred = credentials.Certificate('/Users/vihaansfolder/All Code Files For Visual /Website/fitness-app-4a1fe-35482cf1a7f9.json')
-   firebase_admin.initialize_app(cred)
 
-cred_path = os.getenv('FIREBASE_CREDENTIALS_PATH', 'fitness-app-4a1fe-35482cf1a7f9.json')
-print("Current working directory:", os.getcwd())
-print("Looking for Firebase credentials file at:", cred_path)
-if not os.path.exists(cred_path):
-    print(f"Error: Firebase credentials file not found at {cred_path}")
-    sys.exit(1)
-try:
-    cred = credentials.Certificate(cred_path)
-    # Avoid re-initializing Firebase app if already initialized
-    if not firebase_admin._apps:
-        firebase_admin.initialize_app(cred)
-        print("Firebase Admin SDK initialized successfully.")
-    else:
-        print("Firebase Admin SDK was already initialized.")
-except ValueError as ve:
-    print(f"Firebase initialization error: {ve}")
-    sys.exit(1)
-except Exception as e:
-    print(f"Unexpected error during Firebase initialization: {e}")
-    sys.exit(1)
-print("App ready to run...")
 
 
 
@@ -97,7 +69,7 @@ def login():
 
     def f():
         try:
-            user = auth.get_user_by_email(Email)
+           
             st.success("Login Successful")
             st.session_state.Username = user.uid
             st.session_state.Useremail = user.email
@@ -124,11 +96,7 @@ def login():
             Password = st.text_input("Password")
             Username = st.text_input("Make A Unique Username")
 
-            if st.button("Create Account"):
-                user = auth.create_user(email=Email, password=Password, uid=Username)
-                st.success("Account Created Successfully!")
-                st.write("Login Using Email And Password")
-
+            
     if st.session_state.signout:
         st.text("Name: " + st.session_state.Username)
         st.button("Sign Out", on_click=t)
